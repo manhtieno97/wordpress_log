@@ -13,7 +13,7 @@ class AAL_Hook_Posts extends AAL_Hook_Base {
 	}
 
 	public function hooks_transition_post_status( $new_status, $old_status, $post ) {
-		if ( 'auto-draft' === $old_status && ( 'auto-draft' !== $new_status && 'inherit' !== $new_status ) ) {
+		/*if ( 'auto-draft' === $old_status && ( 'auto-draft' !== $new_status && 'inherit' !== $new_status ) ) {
 			// page created
 			$action = 'created';
 		}
@@ -31,7 +31,15 @@ class AAL_Hook_Posts extends AAL_Hook_Base {
 		else {
 			// page updated. I guess.
 			$action = 'updated';
-		}
+		}*/
+
+        /*if ( 'publish' !== $old_status &&  'publish' === $new_status  ) {
+            // page created
+            $action = 'publish';
+        }elseif ( 'auto-draft' === $new_status || ( 'new' === $old_status && 'inherit' === $new_status ) ) {
+            // nvm.. ignore it.
+            return;
+        }*/
 
 		if ( wp_is_post_revision( $post->ID ) )
 			return;
@@ -42,7 +50,7 @@ class AAL_Hook_Posts extends AAL_Hook_Base {
 
 		aal_insert_log(
 			array(
-				'action' => $action,
+				'action' => $new_status,
 				'object_type' => 'Post',
 				'object_subtype' => $post->post_type,
 				'object_id' => $post->ID,

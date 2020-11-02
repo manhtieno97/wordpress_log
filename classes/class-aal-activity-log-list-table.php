@@ -375,7 +375,7 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 			;'
 		);
 
-		/*if ( $actions ) {
+		if ( $actions ) {
 			if ( ! isset( $_REQUEST['showaction'] ) )
 				$_REQUEST['showaction'] = '';
 
@@ -387,7 +387,7 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 			printf( '<option value="">%s</option>', __( 'All Actions', 'aryo-activity-log' ) );
 			echo implode( '', $output );
 			echo '</select>';
-		}*/
+		}
 
 		echo '</div>';
 	}
@@ -414,9 +414,9 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 			$where .= $wpdb->prepare( ' AND `object_subtype` = %s', $_REQUEST['subtypeshow'] );
 		}
 
-		if ( isset( $_REQUEST['showaction'] ) && '' !== $_REQUEST['showaction'] ) {
+		/*if ( isset( $_REQUEST['showaction'] ) && '' !== $_REQUEST['showaction'] ) {
 			$where .= $wpdb->prepare( ' AND `action` = %s', $_REQUEST['showaction'] );
-		}
+		}*/
 
 		/*if ( isset( $_REQUEST['usershow'] ) && '' !== $_REQUEST['usershow'] ) {
 			$where .= $wpdb->prepare( ' AND `user_id` = %d', $_REQUEST['usershow'] );
@@ -516,6 +516,9 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
                 unset($this->items[$key]);
             }
 
+            if(!empty($_REQUEST['showaction']) && $item->action!= $_REQUEST['showaction']){
+                unset($this->items[$key]);
+            }
         }
         unset($object);
         $total_items = count($this->items);
